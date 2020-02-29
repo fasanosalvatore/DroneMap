@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <link rel="stylesheet" href="css/style.css">
+    <title>DroneMap</title>
+</head>
+
+<body>
+    <div class="navBar">
+        <div class="missionButtons">
+            <button>
+                <img src="img/missionIcon.svg" alt="" />
+            </button>
+            <button>
+                <img src="img/paramsIcon.svg" alt="" />
+            </button>
+            <button>
+                <img src="img/targetsIcon.svg" alt="" />
+            </button>
+            <button>
+                <img src="img/logsIcon.svg" alt="" />
+            </button>
+        </div>
+        <div class="dronesButtons">
+            <button id="connect">
+                <img src="img/connectIcon.svg" alt="" />
+            </button>
+            <button id="play">
+                <img src="img/playIcon.svg" alt="" />
+            </button>
+            <button id="stop">
+                <img src="img/stopIcon.svg" alt="" />
+            </button>
+        </div>
+    </div>
+    <div id="map"></div>
+</body>
+
+</html>
