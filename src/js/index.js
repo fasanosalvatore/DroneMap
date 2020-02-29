@@ -43,7 +43,7 @@ darkModeMediaQuery.addListener(e => {
   const darkModeOn = e.matches;
   let id = darkModeOn
     ? "fasanosalvatore/ck6t2emzl02141isyp4ppu42o"
-    : "fasanosalvatore/ck77e1nmd022f1jqm9qgrsg4z";
+    : "fasanosalvatore/ck77w8ay811vf1iqjnwkg7d41";
   tile.options.id = id;
   tile.setUrl(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",

@@ -1,6 +1,5 @@
 const path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-
 module.exports = {
   entry: ["babel-polyfill", "./src/js/index.js"],
   module: {

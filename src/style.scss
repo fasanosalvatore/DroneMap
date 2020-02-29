@@ -1,3 +1,7 @@
+:root {
+  --bg-color: #010e18;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,6 +17,7 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
 }
+
 @media only screen and (max-width: 68.75em) {
   html {
     font-size: 50%;
@@ -29,6 +34,12 @@ body {
   position: relative;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: #dbdbdf;
+  }
+}
+
 .navBar {
   padding: 18px 0;
   min-width: 60px;
@@ -36,27 +47,47 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: var(--bg-color);
   align-items: center;
   justify-content: space-between;
-}
 
-.navBar button {
-  border: 0;
-  background: transparent;
-  margin: 8px 0;
-  cursor: pointer;
-}
+  button {
+    position: relative;
+    border: 0;
+    background: transparent;
+    margin: 8px 0;
+    cursor: pointer;
 
-.navBar button img {
-  width: 40px;
-}
+    .tooltip {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 2000;
+      top: 20px;
+      transform: translateY(-50%);
+      left: 190%;
+    }
 
-.navBar > .missionButtons,
-.navBar > .dronesButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    &:hover .tooltip {
+      visibility: visible;
+    }
+
+    img {
+      width: 40px;
+    }
+  }
+
+  > .missionButtons,
+  > .dronesButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .droneCards {
@@ -65,4 +96,14 @@ body {
   left: 24px;
   color: white;
   z-index: 1000;
+
+  &__container {
+    display: flex;
+  }
+
+  &__card {
+    margin-right: 1rem;
+    background-color: white;
+    color: black;
+  }
 }
