@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --open"
+    "start": "webpack-dev-server --host=0.0.0.0 --disable-host-check --useLocalIp --mode development --open"
   },
   "author": "Salvatore Fasano",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "babel-polyfill": "^6.26.0",
     "leaflet": "^1.6.0",
     "leaflet.marker.slideto": "^0.2.0",
+    "notiflix": "^2.1.2",
     "svg-url-loader": "^4.0.0"
   }
 }

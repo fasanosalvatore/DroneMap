@@ -13,10 +13,10 @@
     }
   },
   "events": {
-    "lowBattery": "50",
-    "extremeLowBattery": "30",
-    "masterAlarm": "700",
-    "payloadFailure": "500"
+    "lowBattery": 50,
+    "extremeLowBattery": 30,
+    "masterAlarm": 700,
+    "payloadFailure": 500
   },
   "targetpositions": [
     {

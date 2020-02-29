@@ -1,5 +1,9 @@
 import L from "leaflet";
 import "leaflet.marker.slideto";
+import Notiflix from "notiflix";
+Notiflix.Notify.Init({
+  cssAnimationStyle: "from-right"
+});
 
 import { elements } from "./views/base";
 import { droneIcon, targetIcon } from "./views/icons";
@@ -44,15 +48,14 @@ darkModeMediaQuery.addListener(e => {
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     false
   );
-  console.log(tile);
-  console.log(`Dark mode is ${darkModeOn ? "🌒 on" : "☀️ off"}.`);
 });
 
-const nextTarget = drone => {
+const nextTarget = (drone, target) => {
   if (state.isPlay) {
     drone.currentTarget = (drone.currentTarget + 1) % state.targets.length;
+    let t = target || state.targets[drone.currentTarget].getLatLng();
     setTimeout(() => {
-      drone.marker.slideTo(state.targets[drone.currentTarget].getLatLng(), {
+      drone.marker.slideTo(t, {
         duration: 6000
       });
     }, 500);
@@ -74,10 +77,28 @@ const loadScenario = () => {
   state.drones.map(drone => {
     drone.marker.on("moveend", e => {
       const id = e.sourceTarget.options.id;
-      nextTarget(state.drones[id]);
+      const drone = state.drones[id];
+      if (drone.battery > config.events.extremeLowBattery) nextTarget(drone);
     });
     drone.marker.on("move", e => {
-      updateCard(e.latlng, e.sourceTarget.options.id);
+      const drone = state.drones[e.sourceTarget.options.id];
+      updateCard(e.latlng, drone);
+      if (drone.getBattery() === 0) nextTarget(drone, e.latlng);
+    });
+    drone.on("lowBattery", drone => {
+      Notiflix.Notify.Warning(`Drone ${drone.id} è quasi scarico`);
+    });
+    drone.on("extremeLowBattery", drone => {
+      Notiflix.Report.Failure(
+        `Drone ${drone.id} è scarico`,
+        "Il drone tornerà al takeOff",
+        "Capito"
+      );
+      nextTarget(drone, state.takeOff);
+    });
+    drone.on("stop", drone => {
+      //if (drone.battery === 0) drone.marker.slideCancel();
+      console.log("stop");
     });
     drone.marker.addTo(map);
   });
