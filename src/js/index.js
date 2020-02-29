@@ -1,3 +1,4 @@
+import "../style.scss";
 import L from "leaflet";
 import "leaflet.marker.slideto";
 import Notiflix from "notiflix";

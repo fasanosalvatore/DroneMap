@@ -1,8 +1,10 @@
 import L from "leaflet";
+import droneI from "../../img/droneIcon.svg";
+import targetI from "../../img/targetIcon.svg";
 
 export const droneIcon = new L.Icon({
-  iconUrl: require("svg-url-loader!./assets/droneIcon.svg"),
-  iconRetinaUrl: require("svg-url-loader!./assets/droneIcon.svg"),
+  iconUrl: droneI,
+  iconRetinaUrl: droneI,
   iconAnchor: null,
   popupAnchor: null,
   shadowUrl: null,
@@ -13,8 +15,8 @@ export const droneIcon = new L.Icon({
 });
 
 export const targetIcon = new L.Icon({
-  iconUrl: require("svg-url-loader!./assets/targetIcon.svg"),
-  iconRetinaUrl: require("svg-url-loader!./assets/targetIcon.svg"),
+  iconUrl: targetI,
+  iconRetinaUrl: targetI,
   iconAnchor: null,
   popupAnchor: null,
   shadowUrl: null,
