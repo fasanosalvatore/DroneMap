@@ -10,13 +10,14 @@ export default class Drone extends EventEmitter {
     this.currentTarget = currentTarget;
     this.battery = 100;
     this.startTime = new Date().getTime();
+    this.stopped = false;
   }
 
   getBattery() {
     if (this.battery === 0) return 0;
     const now = new Date().getTime();
     let diff = now - this.startTime;
-    if (diff > 100 + this.id * 100) {
+    if (diff > 200 + this.id * 100) {
       this.startTime = now;
       if (this.battery > 0) this.battery--;
       if (this.battery === config.events.lowBattery) this.emit("lowBattery", this);

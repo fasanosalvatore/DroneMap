@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
-    "start": "webpack-dev-server --host=0.0.0.0 --disable-host-check --useLocalIp --mode development --open",
-    "newStart": "webpack-dev-server --host=0.0.0.0 --disable-host-check --useLocalIp --config webpack.dev.js --open",
-    "newBuild": "webpack --config webpack.prod.js"
+    "start": "webpack-dev-server --host=0.0.0.0 --disable-host-check --useLocalIp --config webpack.dev.js --open",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "Salvatore Fasano",
   "license": "ISC",

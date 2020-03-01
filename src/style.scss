@@ -1,5 +1,36 @@
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('fonts/SFProDisplay-Regular.eot');
+    src: url('fonts/SFProDisplay-Regular.eot?#iefix') format('embedded-opentype'),
+        url('fonts/SFProDisplay-Regular.woff2') format('woff2'),
+        url('fonts/SFProDisplay-Regular.woff') format('woff'),
+        url('fonts/SFProDisplay-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: url('fonts/SFProDisplay-Bold.eot');
+    src: url('fonts/SFProDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+        url('fonts/SFProDisplay-Bold.woff2') format('woff2'),
+        url('fonts/SFProDisplay-Bold.woff') format('woff'),
+        url('fonts/SFProDisplay-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 :root {
-  --bg-color: #010e18;
+  --bg: #252F3F;
+  --secondary-bg: #4B5563;
+  --main-text: #F4F5F7;
+  --secondary-text: #D2D6DC;
+  --error-bg: #F05252;
+  --error-text: #FBD5D5;
+  --success-bg: #0E9F6E;
+  --success-text: #BCF0DA;
+  --warning-bg: #C27803;
+  --warning-text: #FCE96A;
 }
 
 * {
@@ -11,11 +42,13 @@
 *::before,
 *::after {
   box-sizing: inherit;
+  font-family: 'SF Pro Display';
 }
 
 html {
   box-sizing: border-box;
   font-size: 62.5%;
+  font-family: 'SF Pro Display';
 }
 
 @media only screen and (max-width: 68.75em) {
@@ -36,18 +69,21 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: #dbdbdf;
+    --bg: #D2D6DC;
+    --secondary-bg: #F4F5F7;
+    --main-text: #374151;
+    --secondary-text: #9FA6B2;
   }
 }
 
 .navBar {
-  padding: 18px 0;
+  padding: 2rem 0;
   min-width: 60px;
   width: 5vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-color);
+  background-color: var(--bg);
   align-items: center;
   justify-content: space-between;
 
@@ -55,8 +91,32 @@ body {
     position: relative;
     border: 0;
     background: transparent;
-    margin: 8px 0;
+    padding: 1.5rem 0;
+    width: 100%;
     cursor: pointer;
+
+    &:hover, &:focus, &.isPlay {
+      outline: none;
+      background: var(--secondary-bg);
+    }
+
+    .connection-signal {
+      position: absolute;
+      background: var(--error-bg);
+      height: .5rem;
+      top: 50%;
+      transform: translateX(-60%) translateY(-50%);
+      width: 2rem;
+      border-radius: 50px;
+      box-shadow: rgba(242,82,82, .5) 1px 0 4px;
+      z-index: 3000;
+      display: block;
+    }
+
+    .connected {
+      background: var(--success-bg);
+      box-shadow: rgba(14,159,110, .5) 1px 0 4px;
+    }
 
     .tooltip {
       visibility: hidden;
@@ -80,6 +140,11 @@ body {
     img {
       width: 40px;
     }
+
+    g, path {
+      fill: var(--main-text);
+    }
+    
   }
 
   > .missionButtons,
@@ -87,14 +152,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 }
 
 .droneCards {
   position: absolute;
-  bottom: 10px;
+  bottom: 2rem;
   left: 24px;
-  color: white;
+  color: var(--main-text);
   z-index: 1000;
 
   &__container {
@@ -102,8 +168,75 @@ body {
   }
 
   &__card {
+    min-width: 30rem;
+    min-height: 15rem;
+    padding: 16px;
+    border-radius: 5px;
     margin-right: 1rem;
-    background-color: white;
-    color: black;
+    background-color: var(--secondary-bg);
+    cursor: default;
+
+    &__commands {
+      display: flex;
+      align-items: center;
+    }
+
+    &__titleBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        border: none;
+        background: transparent;
+        margin-right: 4px;
+        padding: 4px;
+        cursor: pointer;
+
+        svg {
+          transform: scale(2);
+        }
+
+        path {
+          fill: var(--main-text);
+        }
+
+        circle {
+          stroke: var(--main-text);
+        }
+      }
+    }
+
+    &__battery {
+      font-size: 1rem;
+      border-radius: 2px;
+      background-color: var(--success-bg);
+      color: var(--success-text);
+      box-shadow: rgba(14,159,110, .5) 0px 0 4px;
+      padding: 1px 6px;
+    }
+
+    &__battery.lowBattery {
+      background-color: var(--warning-bg);
+      color: var(--warning-text);
+      box-shadow: rgba(194,120,3, .5) 0px 0 4px;
+    }
+
+    &__battery.extremeLowBattery {
+      background-color: var(--error-bg);
+      color: var(--error-text);
+      box-shadow: rgba(242,82,82, .5) 0px 0 4px;
+    }
+
+    &__latlng {
+      margin-top: 16px;
+    }
+
+    &__title {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: var(--secondary-text);
+      margin-right: 4px;
+    }
   }
 }

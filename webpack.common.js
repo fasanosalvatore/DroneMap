@@ -19,6 +19,18 @@ module.exports = {
         }
       },
       {
+        test: /\.(woff|woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
