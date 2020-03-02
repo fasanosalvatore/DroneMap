@@ -10,21 +10,21 @@ Notiflix.Notify.Init({
   cssAnimationStyle: "from-right",
   useIcon: false,
   warning: {
-    background: '#C27803'
+    background: "#C27803"
   },
   failure: {
-    background: '#F05252'
+    background: "#F05252"
   }
 });
 
 Notiflix.Report.Init({
-  backgroundColor: '#f8f8f8',
-  borderRadius: '5px',
+  backgroundColor: "#f8f8f8",
+  borderRadius: "5px",
   useGoogleFont: false,
-  titleFontSize: '16px',
-  messageFontSize: '13px',
-  buttonFontSize: '14px',
-  svgSize: '30px'
+  titleFontSize: "16px",
+  messageFontSize: "13px",
+  buttonFontSize: "14px",
+  svgSize: "30px"
 });
 
 import { elements, distance } from "./views/base";
@@ -49,9 +49,7 @@ darkModeMediaQuery.addListener(e => {
   const id = darkModeOn
     ? "fasanosalvatore/ck786fr9n2hzq1ipkub6s7dl1"
     : "fasanosalvatore/ck785ty7h164l1iplkonls44p";
-  const icon = darkModeOn
-    ? droneIconDark
-    : droneIcon;
+  const icon = darkModeOn ? droneIconDark : droneIcon;
   tile.options.id = id;
   tile.setUrl(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -67,7 +65,9 @@ var tile = L.tileLayer(
     attribution:
       'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    id: darkModeMediaQuery.matches ? "fasanosalvatore/ck786fr9n2hzq1ipkub6s7dl1" : "fasanosalvatore/ck785ty7h164l1iplkonls44p",
+    id: darkModeMediaQuery.matches
+      ? "fasanosalvatore/ck786fr9n2hzq1ipkub6s7dl1"
+      : "fasanosalvatore/ck785ty7h164l1iplkonls44p",
     tileSize: 512,
     zoomOffset: -1,
     accessToken:
@@ -82,12 +82,22 @@ const nextTarget = (drone, target) => {
     let t = target || state.targets[drone.currentTarget].getLatLng();
     setTimeout(() => {
       drone.marker.slideTo(t, {
-        duration: distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, t.lat, t.lng, "K") / (state.velocity / 60 / 60 / 60 / 60)
+        duration:
+          distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, t.lat, t.lng, "K") /
+          (state.velocity / 60 / 60 / 60 / 60)
       });
     }, 500);
   } else {
     drone.marker.slideTo(state.takeOff, {
-      duration: distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, state.takeOff.lat, state.takeOff.lng, "K") / (state.velocity / 60 / 60 / 60 / 60)
+      duration:
+        distance(
+          drone.marker.getLatLng().lat,
+          drone.marker.getLatLng().lng,
+          state.takeOff.lat,
+          state.takeOff.lng,
+          "K"
+        ) /
+        (state.velocity / 60 / 60 / 60 / 60)
     });
   }
 };
@@ -95,13 +105,14 @@ const nextTarget = (drone, target) => {
 //CARICAMENTO DELLO SCENARIO
 const loadScenario = () => {
   state.isConnect = true;
-  const icon = darkModeMediaQuery.matches
-    ? droneIconDark
-    : droneIcon;
+  const icon = darkModeMediaQuery.matches ? droneIconDark : droneIcon;
   elements.connect.querySelector(".connection-signal").classList.add("connected");
   config.targetpositions.map(target => state.targets.push(L.marker(target, { icon: targetIcon })));
   for (let i = 0; i < config.parameter.numberOfAircrafts; i++) {
     state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), i - 1));
+    state.drones[i].marker
+      .bindTooltip("" + i, { direction: "center", permanent: true })
+      .openTooltip();
   }
   state.velocity = config.parameter.minSpeedOfAircraft;
   state.targets.map(target => target.addTo(map));

@@ -11,6 +11,7 @@ export const droneIcon = new L.Icon({
   shadowUrl: null,
   shadowSize: null,
   shadowAnchor: null,
+  tooltipAnchor: [0, 0],
   iconSize: new L.Point(60, 60)
   //className: "leaflet-div-icon"
 });

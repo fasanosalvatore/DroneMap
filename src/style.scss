@@ -1,36 +1,36 @@
 @font-face {
-    font-family: 'SF Pro Display';
-    src: url('fonts/SFProDisplay-Regular.eot');
-    src: url('fonts/SFProDisplay-Regular.eot?#iefix') format('embedded-opentype'),
-        url('fonts/SFProDisplay-Regular.woff2') format('woff2'),
-        url('fonts/SFProDisplay-Regular.woff') format('woff'),
-        url('fonts/SFProDisplay-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "SF Pro Display";
+  src: url("fonts/SFProDisplay-Regular.eot");
+  src: url("fonts/SFProDisplay-Regular.eot?#iefix") format("embedded-opentype"),
+    url("fonts/SFProDisplay-Regular.woff2") format("woff2"),
+    url("fonts/SFProDisplay-Regular.woff") format("woff"),
+    url("fonts/SFProDisplay-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'SF Pro Display';
-    src: url('fonts/SFProDisplay-Bold.eot');
-    src: url('fonts/SFProDisplay-Bold.eot?#iefix') format('embedded-opentype'),
-        url('fonts/SFProDisplay-Bold.woff2') format('woff2'),
-        url('fonts/SFProDisplay-Bold.woff') format('woff'),
-        url('fonts/SFProDisplay-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+  font-family: "SF Pro Display";
+  src: url("fonts/SFProDisplay-Bold.eot");
+  src: url("fonts/SFProDisplay-Bold.eot?#iefix") format("embedded-opentype"),
+    url("fonts/SFProDisplay-Bold.woff2") format("woff2"),
+    url("fonts/SFProDisplay-Bold.woff") format("woff"),
+    url("fonts/SFProDisplay-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 :root {
-  --bg: #252F3F;
-  --secondary-bg: #4B5563;
-  --main-text: #F4F5F7;
-  --secondary-text: #D2D6DC;
-  --error-bg: #F05252;
-  --error-text: #FBD5D5;
-  --success-bg: #0E9F6E;
-  --success-text: #BCF0DA;
-  --warning-bg: #C27803;
-  --warning-text: #FCE96A;
+  --bg: #252f3f;
+  --secondary-bg: #4b5563;
+  --main-text: #f4f5f7;
+  --secondary-text: #d2d6dc;
+  --error-bg: #f05252;
+  --error-text: #fbd5d5;
+  --success-bg: #0e9f6e;
+  --success-text: #bcf0da;
+  --warning-bg: #c27803;
+  --warning-text: #fce96a;
 }
 
 * {
@@ -42,13 +42,13 @@
 *::before,
 *::after {
   box-sizing: inherit;
-  font-family: 'SF Pro Display';
+  font-family: "SF Pro Display";
 }
 
 html {
   box-sizing: border-box;
   font-size: 62.5%;
-  font-family: 'SF Pro Display';
+  font-family: "SF Pro Display";
 }
 
 @media only screen and (max-width: 68.75em) {
@@ -69,10 +69,10 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #D2D6DC;
-    --secondary-bg: #F4F5F7;
+    --bg: #d2d6dc;
+    --secondary-bg: #f4f5f7;
     --main-text: #374151;
-    --secondary-text: #9FA6B2;
+    --secondary-text: #9fa6b2;
   }
 }
 
@@ -95,7 +95,9 @@ body {
     width: 100%;
     cursor: pointer;
 
-    &:hover, &:focus, &.isPlay {
+    &:hover,
+    &:focus,
+    &.isPlay {
       outline: none;
       background: var(--secondary-bg);
     }
@@ -103,19 +105,19 @@ body {
     .connection-signal {
       position: absolute;
       background: var(--error-bg);
-      height: .5rem;
+      height: 0.5rem;
       top: 50%;
       transform: translateX(-60%) translateY(-50%);
       width: 2rem;
       border-radius: 50px;
-      box-shadow: rgba(242,82,82, .5) 1px 0 4px;
+      box-shadow: rgba(242, 82, 82, 0.5) 1px 0 4px;
       z-index: 3000;
       display: block;
     }
 
     .connected {
       background: var(--success-bg);
-      box-shadow: rgba(14,159,110, .5) 1px 0 4px;
+      box-shadow: rgba(14, 159, 110, 0.5) 1px 0 4px;
     }
 
     .tooltip {
@@ -141,10 +143,10 @@ body {
       width: 40px;
     }
 
-    g, path {
+    g,
+    path {
       fill: var(--main-text);
     }
-    
   }
 
   > .missionButtons,
@@ -212,20 +214,20 @@ body {
       border-radius: 2px;
       background-color: var(--success-bg);
       color: var(--success-text);
-      box-shadow: rgba(14,159,110, .5) 0px 0 4px;
+      box-shadow: rgba(14, 159, 110, 0.5) 0px 0 4px;
       padding: 1px 6px;
     }
 
     &__battery.lowBattery {
       background-color: var(--warning-bg);
       color: var(--warning-text);
-      box-shadow: rgba(194,120,3, .5) 0px 0 4px;
+      box-shadow: rgba(194, 120, 3, 0.5) 0px 0 4px;
     }
 
     &__battery.extremeLowBattery {
       background-color: var(--error-bg);
       color: var(--error-text);
-      box-shadow: rgba(242,82,82, .5) 0px 0 4px;
+      box-shadow: rgba(242, 82, 82, 0.5) 0px 0 4px;
     }
 
     &__latlng {
@@ -239,4 +241,10 @@ body {
       margin-right: 4px;
     }
   }
+}
+
+.leaflet-tooltip {
+  background-color: var(--bg);
+  border: none;
+  color: var(--main-text);
 }
