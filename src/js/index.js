@@ -1,4 +1,3 @@
-//TODO: BBug sugli stop (scritta takeOff e errori in console)
 import "../style.scss";
 import L from "leaflet";
 import "leaflet.marker.slideto";
@@ -138,7 +137,7 @@ const loadScenario = () => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("extremeLowBattery");
       Notiflix.Notify.Failure(`Drone ${drone.id} torna al takeOff`);
-      drone.currentTarget = "takOff";
+      drone.currentTarget = "takeOff";
       nextTarget(drone, state.takeOff);
     });
     drone.on("stop", drone => {
