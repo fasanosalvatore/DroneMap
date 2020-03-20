@@ -30,6 +30,7 @@ import { elements, distance } from "./views/base";
 import { droneIcon, droneIconDark, targetIcon } from "./views/icons";
 import { createCards, updateCard } from "./views/DroneCards";
 import Drone from "./models/Drone";
+import AttitudeIndicator from './models/AttitudeIndicator';
 import config from "./config.json";
 
 const state = {

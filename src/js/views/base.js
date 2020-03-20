@@ -2,7 +2,8 @@ export const elements = {
   map: document.getElementById("map"),
   connect: document.getElementById("connect"),
   play: document.getElementById("play"),
-  stop: document.getElementById("stop")
+  stop: document.getElementById("stop"),
+  attitudeIndicator: document.getElementById("attitudeIndicator")
 };
 
 export const distance = (lat1, lon1, lat2, lon2, unit) => {
