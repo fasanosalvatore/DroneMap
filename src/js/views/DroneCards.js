@@ -22,10 +22,10 @@ export const createCards = drones => {
       <p>Pronto alla partenza</p>
       <div class="droneCards__card__latlng">
         <p><span class="droneCards__card__title">Lat</span><span class="coords">${
-        drone.marker.getLatLng().lat
+          drone.marker.getLatLng().lat
         }</span></p>
         <p><span class="droneCards__card__title">Lng</span><span class="coords">${
-        drone.marker.getLatLng().lng
+          drone.marker.getLatLng().lng
         }</span></p>
       </div>
     </div>
@@ -48,7 +48,7 @@ export const createCards = drones => {
     s.addEventListener("click", e => {
       const clickedDrone =
         drones[
-        e.target.closest("#stopSingleDrone").parentNode.parentNode.parentNode.dataset.droneid
+          e.target.closest("#stopSingleDrone").parentNode.parentNode.parentNode.dataset.droneid
         ];
       stopSingleDrone(clickedDrone);
     });
@@ -56,30 +56,34 @@ export const createCards = drones => {
 
   document.querySelectorAll("#attitudeIndicatorOpen").forEach(s => {
     s.addEventListener("click", e => {
-      const id = e.target.closest("#attitudeIndicatorOpen").parentNode.parentNode.parentNode.dataset.droneid;
-      const clickedDrone =
-        drones[id];
-      if (elements.attitudeIndicator.classList.contains('open')) {
+      console.log("ciao");
+      const id = e.target.closest("#attitudeIndicatorOpen").parentNode.parentNode.parentNode.dataset
+        .droneid;
+      const clickedDrone = drones[id];
+      if (elements.attitudeIndicator.classList.contains("open")) {
         elements.attitudeIndicator.removeAttribute("data-drone");
         elements.attitudeIndicator.innerHTML = "";
         if (elements.attitudeIndicator.dataset.drone === id) delete clickedDrone.attitudeIndicator;
         else delete drones[elements.attitudeIndicator.dataset.drone].attitudeIndicator;
         clearInterval(attituteUpdate);
-      }
-      else {
+      } else {
         elements.attitudeIndicator.setAttribute("data-drone", id);
-        clickedDrone.attitudeIndicator = new AttitudeIndicator('#attitudeIndicator', { size: 200, pitch: 0, roll: 0, showBox: false });
+        clickedDrone.attitudeIndicator = new AttitudeIndicator("#attitudeIndicator", {
+          size: 200,
+          pitch: 0,
+          roll: 0,
+          showBox: false
+        });
         var increment = 0;
-        const attituteUpdate = setInterval(function () {
+        const attituteUpdate = setInterval(function() {
           clickedDrone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
           clickedDrone.attitudeIndicator.setPitch(50 * Math.sin(increment / 20));
           increment++;
         }, 50);
       }
-      elements.attitudeIndicator.classList.toggle('open');
+      elements.attitudeIndicator.classList.toggle("open");
     });
   });
-
 };
 
 export const updateCard = (latlng, drone) => {
