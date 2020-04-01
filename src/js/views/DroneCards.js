@@ -54,34 +54,39 @@ export const createCards = drones => {
     });
   });
 
+  const addAttitudeIndicator = drone => {
+    elements.attitudeIndicator.setAttribute("data-drone", drone.id);
+    drone.attitudeIndicator = new AttitudeIndicator("#attitudeIndicator", {
+      size: 200,
+      pitch: 0,
+      roll: 0,
+      showBox: false
+    });
+    var increment = 0;
+    elements.currentUpdateInterval = setInterval(function() {
+      drone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
+      drone.attitudeIndicator.setPitch(50 * Math.sin(increment / 20));
+      increment++;
+    }, 50);
+  };
+
   document.querySelectorAll("#attitudeIndicatorOpen").forEach(s => {
     s.addEventListener("click", e => {
-      console.log("ciao");
       const id = e.target.closest("#attitudeIndicatorOpen").parentNode.parentNode.parentNode.dataset
         .droneid;
       const clickedDrone = drones[id];
-      if (elements.attitudeIndicator.classList.contains("open")) {
+      if (!elements.attitudeIndicator.classList.contains("open")) {
+        addAttitudeIndicator(clickedDrone);
+        elements.attitudeIndicator.classList.toggle("open");
+      } else {
+        const oldId = elements.attitudeIndicator.dataset.drone;
+        clearInterval(elements.currentUpdateInterval);
         elements.attitudeIndicator.removeAttribute("data-drone");
         elements.attitudeIndicator.innerHTML = "";
-        if (elements.attitudeIndicator.dataset.drone === id) delete clickedDrone.attitudeIndicator;
-        else delete drones[elements.attitudeIndicator.dataset.drone].attitudeIndicator;
-        clearInterval(attituteUpdate);
-      } else {
-        elements.attitudeIndicator.setAttribute("data-drone", id);
-        clickedDrone.attitudeIndicator = new AttitudeIndicator("#attitudeIndicator", {
-          size: 200,
-          pitch: 0,
-          roll: 0,
-          showBox: false
-        });
-        var increment = 0;
-        const attituteUpdate = setInterval(function() {
-          clickedDrone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
-          clickedDrone.attitudeIndicator.setPitch(50 * Math.sin(increment / 20));
-          increment++;
-        }, 50);
+        console.log(id !== oldId);
+        if (id !== oldId) addAttitudeIndicator(clickedDrone);
+        else elements.attitudeIndicator.classList.toggle("open");
       }
-      elements.attitudeIndicator.classList.toggle("open");
     });
   });
 };

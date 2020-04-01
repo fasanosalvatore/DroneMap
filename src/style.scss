@@ -73,7 +73,6 @@ body {
   z-index: 1000;
 }
 
-
 @media (prefers-color-scheme: light) {
   :root {
     --bg: #d2d6dc;
@@ -148,7 +147,7 @@ body {
       visibility: visible;
     }
 
-    img {
+    svg {
       width: 40px;
     }
 
@@ -280,4 +279,14 @@ div.instrument.attitude div.roll {
 }
 div.instrument.attitude div.roll div.pitch {
   top: 0%;
+}
+
+@media screen and (min-width: 2000px) {
+  .navBar {
+    button {
+      svg {
+        width: 80px;
+      }
+    }
+  }
 }
