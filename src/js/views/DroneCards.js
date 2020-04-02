@@ -1,4 +1,4 @@
-import { elements } from "./base";
+import { distance, elements } from "./base";
 import AttitudeIndicator from "../models/AttitudeIndicator";
 
 export const createCards = drones => {
@@ -107,7 +107,7 @@ export const updateCard = (latlng, drone) => {
   let battery = card.querySelector(".droneCards__card__battery");
   battery.textContent = drone.getBattery() + "%";
   let p = card.querySelectorAll("p");
-  if (drone.getBattery() > 0) p[0].textContent = `Si dirige al target ${drone.currentTarget}`;
+  if (drone.getBattery() > 0) p[0].textContent = `Si dirige al target ${drone.currentTarget.n}`;
   else if (drone.getBattery() <= 0) p[0].textContent = `È atterrato`;
   let coords = card.querySelectorAll(".coords");
   coords[0].textContent = latlng.lat;
@@ -118,9 +118,9 @@ export const updatePanel = (latlng, drone) => {
   if(elements.attitudeIndicator.dataset.drone == drone.id) {
     let p = elements.attitudeIndicator.querySelectorAll("p");
     p[0].textContent = `Battery: ${drone.getBattery()}%`;
-    if (drone.getBattery() > 0) p[1].textContent = `Si dirige al target ${drone.currentTarget}`;
+    if (drone.getBattery() > 0) p[1].textContent = `Si dirige al target ${drone.currentTarget.n}`;
     else if (drone.getBattery() <= 0) p[1].textContent = `È atterrato`;
-    p[2].textContent = "Distanza dal target: " + 0;
+    p[2].textContent = "Distanza dal target: " + distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, drone.currentTarget.target.lat, drone.currentTarget.target.lng, "K").toFixed(7);
     p[3].textContent = "Latitudine: " + latlng.lat;
     p[4].textContent = "Longitudine: " + latlng.lng;
   }

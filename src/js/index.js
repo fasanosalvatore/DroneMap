@@ -77,9 +77,11 @@ var tile = L.tileLayer(
 ).addTo(map);
 
 const nextTarget = (drone, target) => {
-  if (state.isPlay && (!isNaN(drone.currentTarget) || drone.currentTarget !== "takeOff")) {
-    drone.currentTarget = (drone.currentTarget + 1) % state.targets.length;
-    let t = target || state.targets[drone.currentTarget].getLatLng();
+  if (state.isPlay && (!isNaN(drone.currentTarget.n) || drone.currentTarget.n !== "takeOff")) {
+
+    drone.currentTarget= { n: (drone.currentTarget.n + 1) % state.targets.length, target: state.targets[(drone.currentTarget.n + 1) % state.targets.length].getLatLng()};
+        console.log(drone.currentTarget);
+    let t = target || state.targets[drone.currentTarget.n].getLatLng();
     setTimeout(() => {
       drone.marker.slideTo(t, {
         duration:
@@ -109,7 +111,7 @@ const loadScenario = () => {
   elements.connect.querySelector(".connection-signal").classList.add("connected");
   config.targetpositions.map(target => state.targets.push(L.marker(target, { icon: targetIcon })));
   for (let i = 0; i < config.parameter.numberOfAircrafts; i++) {
-    state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), i - 1));
+    state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), {n: i - 1}));
     state.drones[i].marker
       .bindTooltip("" + i, { direction: "center", permanent: true })
       .openTooltip();
@@ -139,11 +141,11 @@ const loadScenario = () => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("extremeLowBattery");
       Notiflix.Notify.Failure(`Drone ${drone.id} torna al takeOff`);
-      drone.currentTarget = "takeOff";
+      drone.currentTarget = {n: "takeOff", target: state.takeOff};
       nextTarget(drone, state.takeOff);
     });
     drone.on("stop", drone => {
-      drone.currentTarget = "takeOff";
+      drone.currentTarget = {n: "takeOff", target: state.takeOff};
       nextTarget(drone, state.takeOff);
     });
     drone.marker.addTo(map);
@@ -173,7 +175,7 @@ elements.stop.addEventListener("click", () => {
   state.isPlay = false;
   elements.play.classList.toggle("isPlay");
   state.drones.map(drone => {
-    drone.currentTarget = "takeOff";
+    drone.currentTarget = {n: "takeOff", target: state.takeOff};
     nextTarget(drone);
   });
 });
