@@ -68,9 +68,11 @@ body {
 }
 #attitudeIndicator {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
   z-index: 1000;
+  height: 100vh;
+  background-color: var(--secondary-bg)
 }
 
 @media (prefers-color-scheme: light) {
@@ -205,6 +207,7 @@ body {
         cursor: pointer;
 
         svg {
+          width: 8px;
           transform: scale(2);
         }
 

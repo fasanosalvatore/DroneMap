@@ -28,7 +28,7 @@ Notiflix.Report.Init({
 
 import { elements, distance } from "./views/base";
 import { droneIcon, droneIconDark, targetIcon } from "./views/icons";
-import { createCards, updateCard } from "./views/DroneCards";
+import { createCards, updateCard, updatePanel } from "./views/DroneCards";
 import Drone from "./models/Drone";
 import AttitudeIndicator from './models/AttitudeIndicator';
 import config from "./config.json";
@@ -126,6 +126,7 @@ const loadScenario = () => {
       if (distance(e.latlng.lat, e.latlng.lng, state.takeOff.lat, state.takeOff.lng, "K") > 0.2) {
         const drone = state.drones[e.sourceTarget.options.id];
         updateCard(e.latlng, drone);
+        updatePanel(e.latlng, drone);
         if (drone.getBattery() === 0) nextTarget(drone, e.latlng);
       }
     });
