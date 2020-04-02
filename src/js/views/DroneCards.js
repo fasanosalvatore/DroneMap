@@ -8,7 +8,7 @@ export const createCards = drones => {
       (cards += `
     <div class="droneCards__card" data-droneid="${drone.id}">
       <div class="droneCards__card__titleBar">
-        <h3>#${drone.id} Drone</h3>
+        <h3>#${drone.id + 1} Drone</h3>
         <div class="droneCards__card__commands">
           <button id="stopSingleDrone">
             <svg viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg"><g transform="translate(1 1)" fill="none" fill-rule="evenodd"><circle stroke="#979797" cx="3" cy="3" r="3"/><path fill="#D8D8D8" d="M2 2h2v2H2z"/></g></svg>
@@ -56,14 +56,14 @@ export const createCards = drones => {
 
   const addAttitudeIndicator = drone => {
     elements.attitudeIndicator.setAttribute("data-drone", drone.id);
-    
+
     drone.attitudeIndicator = new AttitudeIndicator("#attitudeIndicator", {
       size: 200,
       pitch: 0,
       roll: 0,
       showBox: false
     });
-    elements.attitudeIndicator.insertAdjacentHTML('afterbegin', `<h2>Drone ${drone.id}</h2>`);
+    elements.attitudeIndicator.insertAdjacentHTML("afterbegin", `<h3>#${drone.id + 1} Drone</h3>`);
     const markup = `
       <p></p>
       <p>Pronto alla partenza</p>
@@ -72,7 +72,7 @@ export const createCards = drones => {
       <p></p>
       <p></p>
     `;
-    elements.attitudeIndicator.insertAdjacentHTML('beforeend', markup);
+    elements.attitudeIndicator.insertAdjacentHTML("beforeend", markup);
     var increment = 0;
     elements.currentUpdateInterval = setInterval(function() {
       drone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
@@ -115,16 +115,21 @@ export const updateCard = (latlng, drone) => {
 };
 
 export const updatePanel = (latlng, drone) => {
-  if(elements.attitudeIndicator.dataset.drone == drone.id) {
+  if (elements.attitudeIndicator.dataset.drone == drone.id) {
     let p = elements.attitudeIndicator.querySelectorAll("p");
     p[0].textContent = `Battery: ${drone.getBattery()}%`;
     if (drone.getBattery() > 0) p[1].textContent = `Si dirige al target ${drone.currentTarget.n}`;
     else if (drone.getBattery() <= 0) p[1].textContent = `È atterrato`;
-    p[2].textContent = "Distanza dal target: " + distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, drone.currentTarget.target.lat, drone.currentTarget.target.lng, "K").toFixed(7);
+    p[2].textContent =
+      "Distanza dal target: " +
+      distance(
+        drone.marker.getLatLng().lat,
+        drone.marker.getLatLng().lng,
+        drone.currentTarget.target.lat,
+        drone.currentTarget.target.lng,
+        "K"
+      ).toFixed(7);
     p[3].textContent = "Latitudine: " + latlng.lat;
     p[4].textContent = "Longitudine: " + latlng.lng;
   }
-  
-  
-
 };

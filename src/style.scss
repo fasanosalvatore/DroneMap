@@ -51,12 +51,6 @@ html {
   font-family: "SF Pro Display";
 }
 
-@media only screen and (max-width: 68.75em) {
-  html {
-    font-size: 50%;
-  }
-}
-
 body {
   display: flex;
 }
@@ -66,13 +60,24 @@ body {
   height: 100vh;
   position: relative;
 }
+
+#attitudeIndicator.open {
+  padding: 1rem;
+  transform: scaleX(1);
+}
+
 #attitudeIndicator {
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
   z-index: 1000;
   height: 100vh;
-  background-color: var(--secondary-bg)
+  background-color: var(--secondary-bg);
+  color: var(--main-text);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
 }
 
 @media (prefers-color-scheme: light) {

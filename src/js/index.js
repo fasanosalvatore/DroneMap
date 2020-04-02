@@ -113,7 +113,7 @@ const loadScenario = () => {
   for (let i = 0; i < config.parameter.numberOfAircrafts; i++) {
     state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), {n: i - 1}));
     state.drones[i].marker
-      .bindTooltip("" + i, { direction: "center", permanent: true })
+      .bindTooltip("" + (i+1), { direction: "center", permanent: true })
       .openTooltip();
   }
   state.velocity = config.parameter.minSpeedOfAircraft;
