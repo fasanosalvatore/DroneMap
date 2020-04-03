@@ -30,7 +30,7 @@ import { elements, distance } from "./views/base";
 import { droneIcon, droneIconDark, targetIcon } from "./views/icons";
 import { createCards, updateCard, updatePanel } from "./views/DroneCards";
 import Drone from "./models/Drone";
-import AttitudeIndicator from './models/AttitudeIndicator';
+import AttitudeIndicator from "./models/AttitudeIndicator";
 import config from "./config.json";
 
 const state = {
@@ -78,9 +78,10 @@ var tile = L.tileLayer(
 
 const nextTarget = (drone, target) => {
   if (state.isPlay && (!isNaN(drone.currentTarget.n) || drone.currentTarget.n !== "takeOff")) {
-
-    drone.currentTarget= { n: (drone.currentTarget.n + 1) % state.targets.length, target: state.targets[(drone.currentTarget.n + 1) % state.targets.length].getLatLng()};
-        console.log(drone.currentTarget);
+    drone.currentTarget = {
+      n: (drone.currentTarget.n + 1) % state.targets.length,
+      target: state.targets[(drone.currentTarget.n + 1) % state.targets.length].getLatLng()
+    };
     let t = target || state.targets[drone.currentTarget.n].getLatLng();
     setTimeout(() => {
       drone.marker.slideTo(t, {
@@ -111,9 +112,9 @@ const loadScenario = () => {
   elements.connect.querySelector(".connection-signal").classList.add("connected");
   config.targetpositions.map(target => state.targets.push(L.marker(target, { icon: targetIcon })));
   for (let i = 0; i < config.parameter.numberOfAircrafts; i++) {
-    state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), {n: i - 1}));
+    state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), { n: i - 1 }));
     state.drones[i].marker
-      .bindTooltip("" + (i+1), { direction: "center", permanent: true })
+      .bindTooltip("" + (i + 1), { direction: "center", permanent: true })
       .openTooltip();
   }
   state.velocity = config.parameter.minSpeedOfAircraft;
@@ -135,17 +136,17 @@ const loadScenario = () => {
     drone.on("lowBattery", drone => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("lowBattery");
-      Notiflix.Notify.Warning(`Drone ${drone.id} è quasi scarico`);
+      Notiflix.Notify.Warning(`Drone ${drone.id + 1} è quasi scarico`);
     });
     drone.on("extremeLowBattery", drone => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("extremeLowBattery");
-      Notiflix.Notify.Failure(`Drone ${drone.id} torna al takeOff`);
-      drone.currentTarget = {n: "takeOff", target: state.takeOff};
+      Notiflix.Notify.Failure(`Drone ${drone.id + 1} torna al takeOff`);
+      drone.currentTarget = { n: "takeOff", target: state.takeOff };
       nextTarget(drone, state.takeOff);
     });
     drone.on("stop", drone => {
-      drone.currentTarget = {n: "takeOff", target: state.takeOff};
+      drone.currentTarget = { n: "takeOff", target: state.takeOff };
       nextTarget(drone, state.takeOff);
     });
     drone.marker.addTo(map);
@@ -175,7 +176,7 @@ elements.stop.addEventListener("click", () => {
   state.isPlay = false;
   elements.play.classList.toggle("isPlay");
   state.drones.map(drone => {
-    drone.currentTarget = {n: "takeOff", target: state.takeOff};
+    drone.currentTarget = { n: "takeOff", target: state.takeOff };
     nextTarget(drone);
   });
 });

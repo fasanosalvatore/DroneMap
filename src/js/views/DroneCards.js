@@ -94,7 +94,6 @@ export const createCards = drones => {
         clearInterval(elements.currentUpdateInterval);
         elements.attitudeIndicator.removeAttribute("data-drone");
         elements.attitudeIndicator.innerHTML = "";
-        console.log(id !== oldId);
         if (id !== oldId) addAttitudeIndicator(clickedDrone);
         else elements.attitudeIndicator.classList.toggle("open");
       }
