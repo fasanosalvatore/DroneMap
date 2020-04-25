@@ -5,7 +5,7 @@
     "parkingTime": "2000",
     "cruiserate": "10",
     "targetareasize": "1km x 1km",
-    "minSpeedOfAircraft": "2500.0",
+    "minSpeedOfAircraft": "3500.0",
     "maxSpeedOfAircraft": "10000.1",
     "takeOff": {
       "lat": 41.12288163056824,

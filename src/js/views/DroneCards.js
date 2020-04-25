@@ -1,10 +1,10 @@
 import { distance, elements } from "./base";
 import AttitudeIndicator from "../models/AttitudeIndicator";
 
-export const createCards = drones => {
+export const createCards = (drones) => {
   let cards = "";
   drones.map(
-    drone =>
+    (drone) =>
       (cards += `
     <div class="droneCards__card" data-droneid="${drone.id}">
       <div class="droneCards__card__titleBar">
@@ -41,11 +41,11 @@ export const createCards = drones => {
   `;
   elements.map.insertAdjacentHTML("beforeend", markup);
 
-  const stopSingleDrone = drone => {
+  const stopSingleDrone = (drone) => {
     drone.emit("stop", drone);
   };
-  document.querySelectorAll("#stopSingleDrone").forEach(s => {
-    s.addEventListener("click", e => {
+  document.querySelectorAll("#stopSingleDrone").forEach((s) => {
+    s.addEventListener("click", (e) => {
       const clickedDrone =
         drones[
           e.target.closest("#stopSingleDrone").parentNode.parentNode.parentNode.dataset.droneid
@@ -54,14 +54,14 @@ export const createCards = drones => {
     });
   });
 
-  const addAttitudeIndicator = drone => {
+  const addAttitudeIndicator = (drone) => {
     elements.attitudeIndicator.setAttribute("data-drone", drone.id);
 
     drone.attitudeIndicator = new AttitudeIndicator("#attitudeIndicator", {
       size: 200,
       pitch: 0,
       roll: 0,
-      showBox: false
+      showBox: false,
     });
     elements.attitudeIndicator.insertAdjacentHTML("afterbegin", `<h3>#${drone.id + 1} Drone</h3>`);
     const markup = `
@@ -74,15 +74,17 @@ export const createCards = drones => {
     `;
     elements.attitudeIndicator.insertAdjacentHTML("beforeend", markup);
     var increment = 0;
-    elements.currentUpdateInterval = setInterval(function() {
-      drone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
-      drone.attitudeIndicator.setPitch(50 * Math.sin(increment / 20));
-      increment++;
-    }, 50);
+    if (drone.battery !== 0) {
+      elements.currentUpdateInterval = setInterval(function () {
+        drone.attitudeIndicator.setRoll(30 * Math.sin(increment / 10));
+        drone.attitudeIndicator.setPitch(50 * Math.sin(increment / 20));
+        increment++;
+      }, 50);
+    }
   };
 
-  document.querySelectorAll("#attitudeIndicatorOpen").forEach(s => {
-    s.addEventListener("click", e => {
+  document.querySelectorAll("#attitudeIndicatorOpen").forEach((s) => {
+    s.addEventListener("click", (e) => {
       const id = e.target.closest("#attitudeIndicatorOpen").parentNode.parentNode.parentNode.dataset
         .droneid;
       const clickedDrone = drones[id];
@@ -118,7 +120,12 @@ export const updatePanel = (latlng, drone) => {
     let p = elements.attitudeIndicator.querySelectorAll("p");
     p[0].textContent = `Battery: ${drone.getBattery()}%`;
     if (drone.getBattery() > 0) p[1].textContent = `Si dirige al target ${drone.currentTarget.n}`;
-    else if (drone.getBattery() <= 0) p[1].textContent = `È atterrato`;
+    else if (drone.getBattery() <= 0) {
+      clearInterval(elements.currentUpdateInterval);
+      drone.attitudeIndicator.setRoll(0);
+      drone.attitudeIndicator.setPitch(0);
+      p[1].textContent = `È atterrato`;
+    }
     p[2].textContent =
       "Distanza dal target: " +
       distance(

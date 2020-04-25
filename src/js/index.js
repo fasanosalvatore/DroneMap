@@ -134,11 +134,6 @@ const loadScenario = () => {
         updatePanel(e.latlng, drone);
         if (drone.getBattery() === 0) {
           nextTarget(drone, e.latlng);
-          clearInterval(elements.currentUpdateInterval);
-          if (drone.attitudeIndicator) {
-            drone.attitudeIndicator.setRoll(0);
-            drone.attitudeIndicator.setPitch(0);
-          }
         }
       }
     });
