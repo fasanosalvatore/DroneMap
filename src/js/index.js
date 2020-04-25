@@ -9,11 +9,11 @@ Notiflix.Notify.Init({
   cssAnimationStyle: "from-right",
   useIcon: false,
   warning: {
-    background: "#C27803"
+    background: "#C27803",
   },
   failure: {
-    background: "#F05252"
-  }
+    background: "#F05252",
+  },
 });
 
 Notiflix.Report.Init({
@@ -23,7 +23,7 @@ Notiflix.Report.Init({
   titleFontSize: "16px",
   messageFontSize: "13px",
   buttonFontSize: "14px",
-  svgSize: "30px"
+  svgSize: "30px",
 });
 
 import { elements, distance } from "./views/base";
@@ -39,12 +39,12 @@ const state = {
   velocity: 0,
   takeOff: config.parameter.takeOff,
   targets: [],
-  drones: []
+  drones: [],
 };
 
 const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: light)");
 
-darkModeMediaQuery.addListener(e => {
+darkModeMediaQuery.addListener((e) => {
   const darkModeOn = e.matches;
   const id = darkModeOn
     ? "fasanosalvatore/ck786fr9n2hzq1ipkub6s7dl1"
@@ -55,7 +55,7 @@ darkModeMediaQuery.addListener(e => {
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     false
   );
-  state.drones.map(d => d.marker.setIcon(icon));
+  state.drones.map((d) => d.marker.setIcon(icon));
 });
 
 var map = L.map("map").setView(state.takeOff, 13);
@@ -72,7 +72,7 @@ var tile = L.tileLayer(
     zoomOffset: -1,
     accessToken:
       "pk.eyJ1IjoiZmFzYW5vc2FsdmF0b3JlIiwiYSI6ImNrNnA5czVxaDE5d3UzbnFzOWZwc2w4YXoifQ.k4wjJrEg9rapGMYjxlRmIg",
-    detectRetina: true
+    detectRetina: true,
   }
 ).addTo(map);
 
@@ -80,14 +80,14 @@ const nextTarget = (drone, target) => {
   if (state.isPlay && (!isNaN(drone.currentTarget.n) || drone.currentTarget.n !== "takeOff")) {
     drone.currentTarget = {
       n: (drone.currentTarget.n + 1) % state.targets.length,
-      target: state.targets[(drone.currentTarget.n + 1) % state.targets.length].getLatLng()
+      target: state.targets[(drone.currentTarget.n + 1) % state.targets.length].getLatLng(),
     };
     let t = target || state.targets[drone.currentTarget.n].getLatLng();
     setTimeout(() => {
       drone.marker.slideTo(t, {
         duration:
           distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, t.lat, t.lng, "K") /
-          (state.velocity / 60 / 60 / 60 / 60)
+          (state.velocity / 60 / 60 / 60 / 60),
       });
     }, 500);
   } else {
@@ -100,7 +100,7 @@ const nextTarget = (drone, target) => {
           state.takeOff.lng,
           "K"
         ) /
-        (state.velocity / 60 / 60 / 60 / 60)
+        (state.velocity / 60 / 60 / 60 / 60),
     });
   }
 };
@@ -110,7 +110,9 @@ const loadScenario = () => {
   state.isConnect = true;
   const icon = darkModeMediaQuery.matches ? droneIconDark : droneIcon;
   elements.connect.querySelector(".connection-signal").classList.add("connected");
-  config.targetpositions.map(target => state.targets.push(L.marker(target, { icon: targetIcon })));
+  config.targetpositions.map((target) =>
+    state.targets.push(L.marker(target, { icon: targetIcon }))
+  );
   for (let i = 0; i < config.parameter.numberOfAircrafts; i++) {
     state.drones.push(new Drone(L.marker(state.takeOff, { id: i, icon: icon }), { n: i - 1 }));
     state.drones[i].marker
@@ -118,34 +120,41 @@ const loadScenario = () => {
       .openTooltip();
   }
   state.velocity = config.parameter.minSpeedOfAircraft;
-  state.targets.map(target => target.addTo(map));
-  state.drones.map(drone => {
-    drone.marker.on("moveend", e => {
+  state.targets.map((target) => target.addTo(map));
+  state.drones.map((drone) => {
+    drone.marker.on("moveend", (e) => {
       const id = e.sourceTarget.options.id;
       const drone = state.drones[id];
       if (drone.battery > config.events.extremeLowBattery) nextTarget(drone);
     });
-    drone.marker.on("move", e => {
+    drone.marker.on("move", (e) => {
       if (distance(e.latlng.lat, e.latlng.lng, state.takeOff.lat, state.takeOff.lng, "K") > 0.2) {
         const drone = state.drones[e.sourceTarget.options.id];
         updateCard(e.latlng, drone);
         updatePanel(e.latlng, drone);
-        if (drone.getBattery() === 0) nextTarget(drone, e.latlng);
+        if (drone.getBattery() === 0) {
+          nextTarget(drone, e.latlng);
+          clearInterval(elements.currentUpdateInterval);
+          if (drone.attitudeIndicator) {
+            drone.attitudeIndicator.setRoll(0);
+            drone.attitudeIndicator.setPitch(0);
+          }
+        }
       }
     });
-    drone.on("lowBattery", drone => {
+    drone.on("lowBattery", (drone) => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("lowBattery");
       Notiflix.Notify.Warning(`Drone ${drone.id + 1} è quasi scarico`);
     });
-    drone.on("extremeLowBattery", drone => {
+    drone.on("extremeLowBattery", (drone) => {
       let card = document.querySelector(`[data-droneid="${drone.id}"]`);
       card.querySelector(".droneCards__card__battery").classList.add("extremeLowBattery");
       Notiflix.Notify.Failure(`Drone ${drone.id + 1} torna al takeOff`);
       drone.currentTarget = { n: "takeOff", target: state.takeOff };
       nextTarget(drone, state.takeOff);
     });
-    drone.on("stop", drone => {
+    drone.on("stop", (drone) => {
       drone.currentTarget = { n: "takeOff", target: state.takeOff };
       nextTarget(drone, state.takeOff);
     });
@@ -161,7 +170,7 @@ const startScenario = () => {
   if (state.isConnect) {
     state.isPlay = true;
     elements.play.classList.toggle("isPlay");
-    state.drones.map(drone => {
+    state.drones.map((drone) => {
       nextTarget(drone);
     });
   } else {
@@ -175,7 +184,7 @@ elements.play.addEventListener("click", startScenario);
 elements.stop.addEventListener("click", () => {
   state.isPlay = false;
   elements.play.classList.toggle("isPlay");
-  state.drones.map(drone => {
+  state.drones.map((drone) => {
     drone.currentTarget = { n: "takeOff", target: state.takeOff };
     nextTarget(drone);
   });
