@@ -1,4 +1,24 @@
-@font-face {
+/* width */
+::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* Track */
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1;
+// }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+
+font-face {
   font-family: "SF Pro Display";
   src: url("fonts/SFProDisplay-Regular.eot");
   src: url("fonts/SFProDisplay-Regular.eot?#iefix") format("embedded-opentype"),
@@ -53,6 +73,7 @@ html {
 
 body {
   display: flex;
+  overflow: hidden;
 }
 
 #map {
@@ -176,12 +197,16 @@ body {
 .droneCards {
   position: absolute;
   bottom: 2rem;
-  left: 24px;
+  left: 9.6rem;
   color: var(--main-text);
   z-index: 1000;
+  right: 2.4rem;
+  font-size: 1.4rem;
 
   &__container {
     display: flex;
+    overflow-x: scroll;
+    padding-bottom: 5px;
   }
 
   &__card {

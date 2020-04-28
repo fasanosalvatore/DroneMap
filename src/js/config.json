@@ -1,59 +1,63 @@
 {
   "parameter": {
-    "numberOfAircrafts": "3",
-    "numberOfTargets": "9",
-    "parkingTime": "2000",
+    "numberOfAircrafts": "5",
+    "numberOfTargets": "10",
+    "parkingTime": "5000",
     "cruiserate": "10",
     "targetareasize": "1km x 1km",
-    "minSpeedOfAircraft": "2500.0",
-    "maxSpeedOfAircraft": "10000.1",
+    "minSpeedOfAircraft": "100.0",
+    "maxSpeedOfAircraft": "150.1",
     "takeOff": {
-      "lat": 41.12288163056824,
-      "lng": 14.22095
+      "lat": 40.7720081,
+      "lng": 14.7911797
     }
   },
   "events": {
-    "lowBattery": 50,
-    "extremeLowBattery": 30,
+    "lowBattery": 30,
+    "extremeLowBattery": 10,
     "masterAlarm": 700,
     "payloadFailure": 500
   },
   "targetpositions": [
     {
-      "lat": 41.14888163056824,
-      "lng": 14.163993315284119
+      "lat": 40.7739221,
+      "lng": 14.7913067
     },
     {
-      "lat": 41.1238163056824,
-      "lng": 14.152891630568237
+      "lat": 40.7728267,
+      "lng": 14.7909215
     },
     {
-      "lat": 41.10698331528412,
-      "lng": 14.160993315284119
+      "lat": 40.7699619,
+      "lng": 14.7901039
     },
     {
-      "lat": 41.12298331528412,
-      "lng": 14.183091630568237
+      "lat": 40.7711027,
+      "lng": 14.7892963
     },
     {
-      "lat": 41.12398331528412,
-      "lng": 14.184891630568237
+      "lat": 40.7702587,
+      "lng": 14.7897719
     },
     {
-      "lat": 41.12198331528412,
-      "lng": 14.181891630568237
+      "lat": 40.7736135,
+      "lng": 14.7889606
     },
     {
-      "lat": 41.12598331528412,
-      "lng": 14.185891630568237
+      "lat": 40.7702362,
+      "lng": 14.792214
     },
     {
-      "lat": 41.12698331528412,
-      "lng": 14.188891630568237
+      "lat": 40.7716005,
+      "lng": 14.7913932
     },
     {
-      "lat": 41.12998331528412,
-      "lng": 14.182891630568237
+      "lat": 40.7712791,
+      "lng": 14.790381
+    },
+    {
+      "lat": 40.7708308,
+      "lng": 14.7902894
     }
   ]
 }

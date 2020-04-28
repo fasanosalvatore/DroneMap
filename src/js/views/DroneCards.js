@@ -39,7 +39,8 @@ export const createCards = (drones) => {
       </div>
     </div>
   `;
-  elements.map.insertAdjacentHTML("beforeend", markup);
+  //elements.map.insertAdjacentHTML("beforeend", markup);
+  document.querySelector("body").insertAdjacentHTML("beforeend", markup);
 
   const stopSingleDrone = (drone) => {
     drone.emit("stop", drone);

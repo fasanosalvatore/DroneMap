@@ -38,6 +38,7 @@ const state = {
   isPlay: false,
   velocity: 0,
   takeOff: config.parameter.takeOff,
+  parkingTime: config.parameter.parkingTime,
   targets: [],
   drones: [],
 };
@@ -58,13 +59,13 @@ darkModeMediaQuery.addListener((e) => {
   state.drones.map((d) => d.marker.setIcon(icon));
 });
 
-var map = L.map("map").setView(state.takeOff, 13);
+var map = L.map("map").setView(state.takeOff, 17);
 var tile = L.tileLayer(
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
   {
     attribution:
       'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
+    maxZoom: 30,
     id: darkModeMediaQuery.matches
       ? "fasanosalvatore/ck786fr9n2hzq1ipkub6s7dl1"
       : "fasanosalvatore/ck785ty7h164l1iplkonls44p",
@@ -89,7 +90,7 @@ const nextTarget = (drone, target) => {
           distance(drone.marker.getLatLng().lat, drone.marker.getLatLng().lng, t.lat, t.lng, "K") /
           (state.velocity / 60 / 60 / 60 / 60),
       });
-    }, 500);
+    }, state.parkingTime);
   } else {
     drone.marker.slideTo(state.takeOff, {
       duration:
@@ -128,7 +129,7 @@ const loadScenario = () => {
       if (drone.battery > config.events.extremeLowBattery) nextTarget(drone);
     });
     drone.marker.on("move", (e) => {
-      if (distance(e.latlng.lat, e.latlng.lng, state.takeOff.lat, state.takeOff.lng, "K") > 0.2) {
+      if (distance(e.latlng.lat, e.latlng.lng, state.takeOff.lat, state.takeOff.lng, "K") > 0) {
         const drone = state.drones[e.sourceTarget.options.id];
         updateCard(e.latlng, drone);
         updatePanel(e.latlng, drone);
