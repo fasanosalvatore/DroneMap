@@ -185,3 +185,57 @@ elements.stop.addEventListener("click", () => {
     nextTarget(drone);
   });
 });
+
+const toggleStep = (type) => {
+  elements.missionStep[currentMissionStep].classList.toggle("active");
+  elements.headerStep[currentMissionStep].classList.toggle("current");
+  if (type === "next") elements.headerStep[currentMissionStep].classList.toggle("done");
+  currentMissionStep =
+    type === "next" ? currentMissionStep + 1 : type === "prev" ? currentMissionStep - 1 : 0;
+  elements.missionStep[currentMissionStep].classList.toggle("active");
+  if (elements.headerStep[currentMissionStep].classList.contains("done"))
+    elements.headerStep[currentMissionStep].classList.toggle("done");
+  elements.headerStep[currentMissionStep].classList.toggle("current");
+  if (
+    (type === "prev" || type === "reset") &&
+    (currentMissionStep === 2 || currentMissionStep === 0)
+  ) {
+    const confirm = document.getElementById("confirm");
+    if (confirm) {
+      confirm.remove();
+      elements.previousStep.insertAdjacentElement("afterend", elements.nextStep);
+    }
+  }
+};
+
+let currentMissionStep = undefined;
+elements.creaMissione.addEventListener("click", (e) => {
+  e.preventDefault();
+  currentMissionStep = 0;
+  elements.creaMissionePopup.style.display = "block";
+});
+
+elements.nextStep.addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleStep("next");
+  if (currentMissionStep === 3) {
+    elements.nextStep.remove();
+    elements.previousStep.insertAdjacentHTML("afterend", `<button id="confirm">Conferma</button>`);
+    document.getElementById("confirm").addEventListener("click", (e) => {
+      e.preventDefault();
+      currentMissionStep = undefined;
+      elements.creaMissionePopup.style.display = "none";
+    });
+  }
+});
+
+elements.previousStep.addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleStep("prev");
+});
+
+elements.reset.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  toggleStep("reset");
+});

@@ -4,7 +4,14 @@ export const elements = {
   play: document.getElementById("play"),
   stop: document.getElementById("stop"),
   attitudeIndicator: document.getElementById("attitudeIndicator"),
-  currentUpdateInterval: undefined
+  currentUpdateInterval: undefined,
+  creaMissionePopup: document.querySelector(".creaMissione"),
+  creaMissione: document.getElementById("creaMissione"),
+  nextStep: document.getElementById("nextStep"),
+  previousStep: document.getElementById("previousStep"),
+  reset: document.getElementById("reset"),
+  missionStep: [...document.querySelectorAll(".creaMissione--step")],
+  headerStep: [...document.querySelectorAll(".creaMissione--header > div")],
 };
 
 export const distance = (lat1, lon1, lat2, lon2, unit) => {
